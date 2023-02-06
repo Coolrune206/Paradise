@@ -34,8 +34,6 @@
 	var/chem_storage = 75
 	/// The range of changeling stings.
 	var/sting_range = 2
-	/// The changeling's identifier when speaking in the hivemind, i.e. "Mr. Delta 123".
-	var/changelingID = "Changeling"
 	/// The current amount of genetic damage incurred from power use.
 	var/genetic_damage = 0
 	/// If the changeling is in the process of absorbing someone.
@@ -63,13 +61,6 @@
 
 /datum/antagonist/changeling/on_gain()
 	SSticker.mode.changelings |= owner
-	var/honorific = owner.current.gender == FEMALE ? "Ms." : "Mr."
-	if(length(GLOB.possible_changeling_IDs))
-		changelingID = pick(GLOB.possible_changeling_IDs)
-		GLOB.possible_changeling_IDs -= changelingID
-		changelingID = "[honorific] [changelingID]"
-	else
-		changelingID = "[honorific] [rand(1,999)]"
 
 	absorbed_dna = list()
 	protected_dna = list()
@@ -90,7 +81,6 @@
 /datum/antagonist/changeling/greet()
 	..()
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/ling_alert.ogg'))
-	to_chat(owner.current, "<span class='danger'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span>")
 
 /datum/antagonist/changeling/farewell()
 	to_chat(owner.current, "<span class='biggerdanger'><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
@@ -101,7 +91,6 @@
 		START_PROCESSING(SSobj, src)
 	add_new_languages(L.languages) // Absorb the languages of the new body.
 	update_languages() // But also, give the changeling the languages they've already absorbed before this.
-	L.add_language("Changeling")
 	// If there's a mob_override, this is a body transfer, and therefore we should give them back their powers they had while in the old body.
 	if(mob_override)
 		for(var/datum/action/changeling/power in acquired_powers)
@@ -129,7 +118,6 @@
 	if(L.hud_used?.lingstingdisplay)
 		L.hud_used.lingstingdisplay.invisibility = 101
 		L.hud_used.lingchemdisplay.invisibility = 101
-	L.remove_language("Changeling")
 	remove_unnatural_languages(L)
 	UnregisterSignal(L, COMSIG_MOB_DEATH)
 	// If there's a mob_override, this is a body transfer, and therefore we should only remove their powers from the old body.
@@ -351,8 +339,6 @@
 /datum/antagonist/changeling/proc/select_dna(message, title, not_in_bank = FALSE)
 	var/list/names = list()
 	for(var/datum/dna/DNA in (absorbed_dna + protected_dna))
-		if(not_in_bank && (DNA in GLOB.hivemind_bank))
-			continue
 		names[DNA.real_name] = DNA
 
 	var/chosen_name = input(message, title, null) as null|anything in names

@@ -77,7 +77,6 @@ GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","E
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			var/datum/antagonist/changeling/cling = changeling.has_antag_datum(/datum/antagonist/changeling)
-			text += "<br><b>Changeling ID:</b> [cling.changelingID]."
 			text += "<br><b>Genomes Extracted:</b> [cling.absorbed_count]"
 
 			var/list/all_objectives = changeling.get_all_objectives()

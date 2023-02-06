@@ -528,25 +528,6 @@
 			return
 	..(speaker, message)
 
-/datum/language/ling
-	name = "Changeling"
-	desc = "Although they are normally wary and suspicious of each other, changelings can commune over a distance."
-	speech_verb = "says"
-	colour = "changeling"
-	key = "g"
-	flags = RESTRICTED | HIVEMIND | NOBABEL
-	follow = TRUE
-
-/datum/language/ling/broadcast(mob/living/speaker, message, speaker_mask)
-	var/datum/antagonist/changeling/cling = speaker.mind?.has_antag_datum(/datum/antagonist/changeling)
-	if(cling)
-		..(speaker, message, cling.changelingID)
-	else if(speaker.mind?.linglink)
-		..()
-	else
-		..(speaker,message)
-
-
 /datum/language/abductor
 	name = "Abductor Mindlink"
 	desc = "Abductors are incapable of speech, but have a psychic link attuned to their own team."
