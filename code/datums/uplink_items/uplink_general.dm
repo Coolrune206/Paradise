@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/can_discount = TRUE
 	/// Can you only buy so many? -1 allows for infinite purchases
 	var/limited_stock = -1
-	/// Can this item be purchased only during hijackings? Hijack-only items are by default unable to be on sale.
+	/// Can this item be purchased only during hijackings or nukings? Hijack-only items are by default unable to be on sale.
 	var/hijack_only = FALSE
 	/// Can you refund this in the uplink?
 	var/refundable = FALSE
@@ -101,8 +101,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/uplink/U)
 
 	if(hijack_only && !(usr.mind.special_role == SPECIAL_ROLE_NUKEOPS))//nukies get items that regular traitors only get with hijack. If a hijack-only item is not for nukies, then exclude it via the gamemode list.
-		if(!(locate(/datum/objective/hijack) in usr.mind.get_all_objectives()) && U.uplink_type != UPLINK_TYPE_ADMIN)
-			to_chat(usr, "<span class='warning'>The Syndicate will only issue this extremely dangerous item to agents assigned the Hijack objective.</span>")
+		if(!(locate(/datum/objective/hijack) in usr.mind.get_all_objectives() || locate(/datum/objective/nuke) in usr.mind.get_all_objectives()) && U.uplink_type != UPLINK_TYPE_ADMIN)
+			to_chat(usr, SPAN_WARNING("The Syndicate will only issue this extremely dangerous item to agents assigned to hijack the shuttle, or detonate the station's nuclear device."))
 			return
 
 	U.uses -= max(cost, 0)
@@ -240,7 +240,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Chainsaw"
 	desc = "A high powered chainsaw for cutting up ...you know...."
 	reference = "CH"
-	item = /obj/item/butcher_chainsaw
+	item = /obj/item/chainsaw/syndie
 	cost = 65
 	surplus = 0 // This has caused major problems with un-needed chainsaw massacres. Bwoink bait.
 	excludefrom = list(UPLINK_TYPE_NUCLEAR)
@@ -787,7 +787,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	reference = "MSTV"
 	item = /obj/item/mod/module/visor/thermal
 	cost = 15 // Don't forget, you need to get a modsuit to go with this
-	surplus = 10 //You don't need more than
 
 /datum/uplink_item/suits/night
 	name = "MODsuit Night Visor Module"
@@ -795,7 +794,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	reference = "MSNV"
 	item = /obj/item/mod/module/visor/night
 	cost = 5 // It's night vision, rnd pumps out those goggles for anyone man.
-	surplus = 10 //You don't need more than one
 
 /datum/uplink_item/suits/plate_compression
 	name = "MODsuit Plate Compression Module"
@@ -833,7 +831,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	reference = "FNAF"
 	item = /obj/item/mod/module/springlock/bite_of_87
 	cost = 5
-	surplus = 10
 
 /datum/uplink_item/suits/hidden_holster
 	name = "Hidden Holster Module"
@@ -841,7 +838,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	reference = "HHM"
 	item = /obj/item/mod/module/holster/hidden
 	cost = 5
-	surplus = 10
 
 /datum/uplink_item/suits/smoke_grenade
 	name = "Smoke Grenade Module"
@@ -849,7 +845,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	reference = "SGM"
 	item = /obj/item/mod/module/dispenser/smoke
 	cost = 10
-	surplus = 10
 
 ////////////////////////////////////////
 // MARK: IMPLANTS
@@ -1014,6 +1009,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	reference = "SUIT"
 	item = /obj/item/clothing/suit/storage/iaa/blackjacket/armored
 	cost = 3
+
+/datum/uplink_item/badass/syndie_garments
+	name = "Syndicate Garment Bag"
+	desc = "A customised garment bag filled with all kinds of Syndicate attire, for the fashionable agent's needs. Proclaim your allegiance with style!"
+	reference = "GRMT"
+	item = /obj/item/storage/bag/garment/syndie
+	cost = 5
 
 ////////////////////////////////////////
 // MARK: BUNDLES AND TELECRYSTALS

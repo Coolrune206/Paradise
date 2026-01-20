@@ -93,7 +93,48 @@
 /obj/effect/spawner/random/stock_parts
 	name = "stock parts spawner"
 	icon_state = "stock_parts"
-	loot_subtype_path = /obj/item/stock_parts
+	loot = list(
+		// T1
+		/obj/item/stock_parts/capacitor,
+		/obj/item/stock_parts/scanning_module,
+		/obj/item/stock_parts/manipulator,
+		/obj/item/stock_parts/micro_laser,
+		/obj/item/stock_parts/matter_bin,
+
+		// T2
+		/obj/item/stock_parts/capacitor/adv,
+		/obj/item/stock_parts/scanning_module/adv,
+		/obj/item/stock_parts/manipulator/nano,
+		/obj/item/stock_parts/micro_laser/high,
+		/obj/item/stock_parts/matter_bin/adv,
+
+		// T3
+		/obj/item/stock_parts/capacitor/super,
+		/obj/item/stock_parts/scanning_module/phasic,
+		/obj/item/stock_parts/manipulator/pico,
+		/obj/item/stock_parts/micro_laser/ultra,
+		/obj/item/stock_parts/matter_bin/super,
+
+		// T4
+		/obj/item/stock_parts/capacitor/quadratic,
+		/obj/item/stock_parts/scanning_module/triphasic,
+		/obj/item/stock_parts/manipulator/femto,
+		/obj/item/stock_parts/micro_laser/quadultra,
+		/obj/item/stock_parts/matter_bin/bluespace,
+
+		// Power cells
+		/obj/item/stock_parts/cell,
+		/obj/item/stock_parts/cell/high,
+		/obj/item/stock_parts/cell/high/plus,
+		/obj/item/stock_parts/cell/super,
+		/obj/item/stock_parts/cell/hyper,
+		/obj/item/stock_parts/cell/bluespace,
+		/obj/item/stock_parts/cell/bluespace/charging,
+		/obj/item/stock_parts/cell/bluespace/trapped,
+		/obj/item/stock_parts/cell/infinite/abductor,
+		/obj/item/stock_parts/cell/high/slime,
+		/obj/item/stock_parts/cell/potato,
+	)
 
 /obj/effect/spawner/random/stock_parts/Initialize(mapload)
 	spawn_loot_count = rand(4, 7)
@@ -155,7 +196,10 @@
 		/obj/item/smithed_item/lens/accelerator,
 		/obj/item/smithed_item/lens/speed,
 		/obj/item/smithed_item/lens/amplifier,
-		/obj/item/smithed_item/lens/efficiency
+		/obj/item/smithed_item/lens/efficiency,
+		/obj/item/kitchen/knife/smithed/utility,
+		/obj/item/kitchen/knife/smithed/thrown,
+		/obj/item/kitchen/knife/smithed/combat,
 	)
 
 /obj/effect/spawner/random/smithed_item/insert
@@ -186,17 +230,24 @@
 		/obj/item/smithed_item/lens/efficiency
 	)
 
+/obj/effect/spawner/random/smithed_item/knife
+	name = "random smithed knife"
+	loot = list(
+		/obj/item/kitchen/knife/smithed/utility,
+		/obj/item/kitchen/knife/smithed/thrown,
+		/obj/item/kitchen/knife/smithed/combat,
+	)
+
 /obj/effect/spawner/random/space_pirate
 	name = "random space pirate spawner"
 	icon_state = "pirate"
 	loot = list(
-		/mob/living/simple_animal/hostile/pirate,
-		/mob/living/simple_animal/hostile/pirate/ranged,
+		/mob/living/basic/pirate,
+		/mob/living/basic/pirate/ranged,
 	)
 
 /obj/effect/spawner/random/fancy_table
 	name = "fancy table spawner"
-	icon = 'icons/effects/random_spawners.dmi'
 	icon_state = "fancy_table"
 	loot_type_path = /obj/structure/table/wood/fancy
 
@@ -215,8 +266,8 @@
 	icon_state = "Carp"
 	spawn_loot_chance = 50
 	loot = list(
-		/mob/living/simple_animal/hostile/carp = 4,
-		/mob/living/simple_animal/hostile/carp/megacarp = 1
+		/mob/living/basic/carp = 4,
+		/mob/living/basic/carp/megacarp = 1
 	)
 
 /obj/effect/spawner/random/rarely_meteor_strike
@@ -253,3 +304,36 @@
 		/obj/item/stack/sheet/mineral/uranium/ten = 5,
 		/obj/item/stack/sheet/mineral/diamond/ten = 1,
 	)
+
+/obj/effect/spawner/random/common_ore
+	name = "random common ore stack"
+	loot = list(
+		/obj/item/stack/ore/iron,
+		/obj/item/stack/ore/glass,
+	)
+	spawn_loot_count = 20
+	spawn_random_offset = TRUE
+
+/obj/effect/spawner/random/uncommon_ore
+	name = "random uncommon ore stack"
+	loot = list(
+		/obj/item/stack/ore/gold,
+		/obj/item/stack/ore/silver,
+		/obj/item/stack/ore/uranium,
+		/obj/item/stack/ore/titanium,
+		/obj/item/stack/ore/plasma,
+	)
+	spawn_loot_count = 15
+	spawn_random_offset = TRUE
+
+/obj/effect/spawner/random/rare_ore
+	name = "random rare ore stack"
+	loot = list(
+		/obj/item/stack/ore/diamond,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/stack/ore/palladium,
+		/obj/item/stack/ore/iridium,
+		/obj/item/stack/ore/platinum
+	)
+	spawn_loot_count = 5
+	spawn_random_offset = TRUE

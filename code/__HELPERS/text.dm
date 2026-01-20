@@ -63,6 +63,8 @@
 	if(no_trim)
 		return copytext(html_encode(name), 1, max_length)
 	else
+		if(isnull(name))
+			return null
 		return trim(html_encode(name), max_length)
 
 //Runs byond's sanitization proc along-side strip_html_simple
@@ -774,3 +776,9 @@
 /proc/wiki_link(article_name, link_text = null)
 	var/url = "[GLOB.configuration.url.wiki_url]/index.php?title=[article_name]"
 	return "<a href=\"[url]\">[link_text ? link_text : url]</a>"
+
+
+/proc/strip_byond_macros(text)
+	text = replacetext(text, "\proper", "")
+	text = replacetext(text, "\improper", "")
+	return text

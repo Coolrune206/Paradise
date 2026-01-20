@@ -1,15 +1,3 @@
-/client/proc/one_click_antag()
-	set name = "Create Antagonist"
-	set desc = "Auto-create an antagonist of your choice"
-	set category = "Event"
-
-	if(!check_rights(R_SERVER|R_EVENT))	return
-
-	if(holder)
-		holder.one_click_antag()
-	return
-
-
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"<B>One-click Antagonist</B><br>
@@ -36,7 +24,7 @@
 		if((M.mind.assigned_role in temp.restricted_jobs) || (M.client.prefs.active_character.species in temp.species_to_mindflayer))
 			return FALSE
 	if(role) // Don't even bother evaluating if there's no role
-		if(player_old_enough_antag(M.client,role) && (role in M.client.prefs.be_special) && !M.client.skip_antag && (!jobban_isbanned(M, role)))
+		if(player_old_enough_antag(M.client,role) && (role in M.client.prefs.be_special) && !M.client.persistent.skip_antag && (!jobban_isbanned(M, role)))
 			return TRUE
 		else
 			return FALSE
@@ -397,7 +385,7 @@
 		thunderdome_candidates.Cut(max_thunderdome_players + 1)
 	if(ISODD(length(thunderdome_candidates))) // We want fair fights
 		var/surplus_candidate = pick_n_take(thunderdome_candidates)
-		to_chat(surplus_candidate, "<span class='warning'>You were not chosen due to an odd number of participants.</span>")
+		to_chat(surplus_candidate, SPAN_WARNING("You were not chosen due to an odd number of participants."))
 	for(var/mob/dead/observer/candidate_to_spawn in thunderdome_candidates)
 		if(!candidate_to_spawn || !candidate_to_spawn.key || !candidate_to_spawn.client)
 			continue

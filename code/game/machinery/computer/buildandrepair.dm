@@ -3,7 +3,7 @@
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	origin_tech = "programming=2"
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_GLASS=200)
@@ -15,7 +15,6 @@
 	var/list/req_components = null
 
 /obj/item/circuitboard/computer
-	board_type = "computer"
 
 /obj/item/circuitboard/machine
 	board_type = "machine"
@@ -39,13 +38,12 @@
 			if(!ispath(A))
 				continue
 			nice_list += list("[req_components[A]] [initial(A.name)]\s")
-		. += "<span class='notice'>Required components: [english_list(nice_list)].</span>"
+		. += SPAN_NOTICE("Required components: [english_list(nice_list)].")
 
 /obj/item/circuitboard/message_monitor
 	board_name = "Message Monitor"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/message_monitor
-	origin_tech = "programming=2"
 
 /obj/item/circuitboard/camera
 	board_name = "Camera Monitor"
@@ -78,11 +76,10 @@
 	board_name = choice
 	build_path = monitor_names_paths[choice]
 	format_board_name()
-	to_chat(user, "<span class='notice'>You set the board to [board_name].</span>")
+	to_chat(user, SPAN_NOTICE("You set the board to [board_name]."))
 
 /obj/item/circuitboard/camera/telescreen
 	board_name = "Telescreen"
-	icon_state = "security"
 	build_path = /obj/machinery/computer/security/telescreen
 
 /obj/item/circuitboard/camera/engine
@@ -102,12 +99,10 @@
 
 /obj/item/circuitboard/camera/prison
 	board_name = "Prison Monitor"
-	icon_state = "security"
 	build_path = /obj/machinery/computer/security/telescreen/prison
 
 /obj/item/circuitboard/camera/interrogation
 	board_name = "Interrogation Monitor"
-	icon_state = "security"
 	build_path = /obj/machinery/computer/security/telescreen/interrogation
 
 /obj/item/circuitboard/camera/minisat
@@ -132,7 +127,6 @@
 
 /obj/item/circuitboard/camera/wooden_tv
 	board_name = "Wooden TV"
-	icon_state = "security"
 	build_path = /obj/machinery/computer/security/wooden_tv
 
 /obj/item/circuitboard/camera/mining
@@ -165,7 +159,7 @@
 
 /obj/item/circuitboard/aiupload_broken
 	board_name = "AI Upload"
-	desc = "<span class='warning'>The board is charred and smells of burnt plastic. It has been rendered useless.</span>"
+	desc = SPAN_WARNING("The board is charred and smells of burnt plastic. It has been rendered useless.")
 	icon_state = "command_broken"
 
 /obj/item/circuitboard/borgupload
@@ -183,12 +177,6 @@
 	board_name = "Medical Records"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/med_data
-	origin_tech = "programming=2;biotech=2"
-
-/obj/item/circuitboard/pandemic
-	board_name = "PanD.E.M.I.C. 2200"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/pandemic
 	origin_tech = "programming=2;biotech=2"
 
 /obj/item/circuitboard/scan_consolenew
@@ -211,7 +199,6 @@
 
 /obj/item/circuitboard/card/minor
 	board_name = "Dept ID Computer"
-	icon_state = "command"
 	build_path = /obj/machinery/computer/card/minor
 	var/target_dept = TARGET_DEPT_GENERIC
 
@@ -246,7 +233,6 @@
 
 /obj/item/circuitboard/card/centcom
 	board_name = "CentComm ID Computer"
-	icon_state = "command"
 	build_path = /obj/machinery/computer/card/centcom
 
 /obj/item/circuitboard/teleporter
@@ -336,9 +322,7 @@
 
 /obj/item/circuitboard/powermonitor/secret
 	board_name = "Outdated Power Monitor"
-	icon_state = "engineering"
 	build_path = /obj/machinery/computer/monitor/secret
-	origin_tech = "programming=2;powerstorage=2"
 
 /obj/item/circuitboard/prisoner
 	board_name = "Prisoner Management"
@@ -360,6 +344,12 @@
 	board_name = "Singularity Monitoring Console"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/singulo_monitor
+	origin_tech = "programming=2;powerstorage=2"
+
+/obj/item/circuitboard/fission_monitor
+	board_name = "\improper NGCR Monitoring Console"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/fission_monitor
 	origin_tech = "programming=2;powerstorage=2"
 
 // RD console circuits, so that de/reconstructing one of the special consoles doesn't ruin everything forever
@@ -441,7 +431,6 @@
 
 /obj/item/circuitboard/labor_shuttle/one_way
 	board_name = "Prisoner Shuttle Console"
-	icon_state = "security"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
 
 /obj/item/circuitboard/ferry
@@ -465,22 +454,18 @@
 
 /obj/item/circuitboard/shuttle/syndicate
 	board_name = "Syndicate Shuttle"
-	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/syndicate
 
 /obj/item/circuitboard/shuttle/syndicate/recall
 	board_name = "Syndicate Shuttle Recall Terminal"
-	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/syndicate/recall
 
 /obj/item/circuitboard/shuttle/syndicate/drop_pod
 	board_name = "Syndicate Drop Pod"
-	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/syndicate/drop_pod
 
 /obj/item/circuitboard/shuttle/golem_ship
 	board_name = "Golem Ship"
-	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/golem_ship
 
 /obj/item/circuitboard/holodeck_control
@@ -499,7 +484,6 @@
 	board_name = "Area Air Control"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/area_atmos
-	origin_tech = "programming=2"
 
 /obj/item/circuitboard/telesci_console
 	board_name = "Telepad Control Console"
@@ -508,7 +492,7 @@
 	origin_tech = "programming=3;bluespace=3;plasmatech=4"
 
 /obj/item/circuitboard/large_tank_control
-	board_name = "Atmospheric Tank Control"
+	board_name = "Large Tank Control"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/general_air_control/large_tank_control
 	origin_tech = "programming=2;engineering=3;materials=2"
@@ -540,7 +524,7 @@
 /obj/item/circuitboard/rdconsole/attackby__legacy__attackchain(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id) || istype(I, /obj/item/pda))
 		if(allowed(user))
-			user.visible_message("<span class='notice'>[user] waves [user.p_their()] ID past [src]'s access protocol scanner.</span>", "<span class='notice'>You swipe your ID past [src]'s access protocol scanner.</span>")
+			user.visible_message(SPAN_NOTICE("[user] waves [user.p_their()] ID past [src]'s access protocol scanner."), SPAN_NOTICE("You swipe your ID past [src]'s access protocol scanner."))
 			var/console_choice = tgui_input_list(user, "What do you want to configure the access to?", "Access Modification", access_types)
 			if(!console_choice)
 				return
@@ -553,9 +537,9 @@
 					build_path = /obj/machinery/computer/rdconsole/public
 
 			format_board_name()
-			to_chat(user, "<span class='notice'>Access protocols set to [console_choice].</span>")
+			to_chat(user, SPAN_NOTICE("Access protocols set to [console_choice]."))
 		else
-			to_chat(user, "<span class='warning'>Access Denied.</span>")
+			to_chat(user, SPAN_WARNING("Access Denied."))
 		return
 	return ..()
 
@@ -582,20 +566,20 @@
 
 /obj/structure/computerframe/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It is <b>[anchored ? "bolted to the floor" : "unbolted"]</b>.</span>"
+	. += SPAN_NOTICE("It is <b>[anchored ? "bolted to the floor" : "unbolted"]</b>.")
 	switch(state)
 		if(STATE_EMPTY)
-			. += "<span class='notice'>The frame is <b>welded together</b>, but it is missing a <i>circuit board</i>.</span>"
+			. += SPAN_NOTICE("The frame is <b>welded together</b>, but it is missing a <i>circuit board</i>.")
 		if(STATE_CIRCUIT)
-			. += "<span class='notice'>A circuit board is <b>firmly connected</b>, but the cover is <i>unscrewed and open</i>.</span>"
+			. += SPAN_NOTICE("A circuit board is <b>firmly connected</b>, but the cover is <i>unscrewed and open</i>.")
 		if(STATE_NOWIRES)
-			. += "<span class='notice'>The cover is <b>screwed shut</b>, but the frame is missing <i>wiring</i>.</span>"
+			. += SPAN_NOTICE("The cover is <b>screwed shut</b>, but the frame is missing <i>wiring</i>.")
 		if(STATE_WIRES)
-			. += "<span class='notice'>The frame is <b>wired</b>, but the <i>glass</i> is missing.</span>"
+			. += SPAN_NOTICE("The frame is <b>wired</b>, but the <i>glass</i> is missing.")
 		if(STATE_GLASS)
-			. += "<span class='notice'>The glass is <b>loosely connected</b> and needs to be <i>screwed into place</i>.</span>"
+			. += SPAN_NOTICE("The glass is <b>loosely connected</b> and needs to be <i>screwed into place</i>.")
 	if(!anchored)
-		. += "<span class='notice'>Alt-Click to rotate it.</span>"
+		. += SPAN_NOTICE("Alt-Click to rotate it.")
 
 /obj/structure/computerframe/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -604,12 +588,12 @@
 
 /obj/structure/computerframe/AltClick(mob/user)
 	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		to_chat(user, SPAN_WARNING("You can't do that right now!"))
 		return
 	if(!Adjacent(user))
 		return
 	if(anchored)
-		to_chat(user, "<span class='warning'>The frame is anchored to the floor!</span>")
+		to_chat(user, SPAN_WARNING("The frame is anchored to the floor!"))
 		return
 	setDir(turn(dir, 90))
 
@@ -653,13 +637,13 @@
 		return
 
 	if(state == STATE_CIRCUIT)
-		to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
+		to_chat(user, SPAN_NOTICE("You remove the circuit board."))
 		state = STATE_EMPTY
 		name = initial(name)
 		circuit.forceMove(drop_location())
 		circuit = null
 	else if(state == STATE_GLASS)
-		to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
+		to_chat(user, SPAN_NOTICE("You remove the glass panel."))
 		state = STATE_WIRES
 		new /obj/item/stack/sheet/glass(drop_location(), 2)
 	else
@@ -675,17 +659,17 @@
 
 	switch(state)
 		if(STATE_CIRCUIT)
-			to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
+			to_chat(user, SPAN_NOTICE("You screw the circuit board into place."))
 			state = STATE_NOWIRES
 			I.play_tool_sound(src)
 			update_icon()
 		if(STATE_NOWIRES)
-			to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
+			to_chat(user, SPAN_NOTICE("You unfasten the circuit board."))
 			state = STATE_CIRCUIT
 			I.play_tool_sound(src)
 			update_icon()
 		if(STATE_GLASS)
-			to_chat(user, "<span class='notice'>You connect the monitor.</span>")
+			to_chat(user, SPAN_NOTICE("You connect the monitor."))
 			I.play_tool_sound(src)
 			var/obj/machinery/computer/B = new circuit.build_path(loc)
 			B.setDir(dir)
@@ -701,14 +685,14 @@
 		return
 
 	if(state == STATE_WIRES)
-		to_chat(user, "<span class='notice'>You remove the cables.</span>")
+		to_chat(user, SPAN_NOTICE("You remove the cables."))
 		var/obj/item/stack/cable_coil/C = new(drop_location())
 		C.amount = 5
 		state = STATE_NOWIRES
 		I.play_tool_sound(src)
 		update_icon()
 
-/obj/structure/computerframe/attackby__legacy__attackchain(obj/item/I, mob/user, params)
+/obj/structure/computerframe/item_interaction(mob/living/user, obj/item/I, list/modifiers)
 	switch(state)
 		if(STATE_EMPTY)
 			if(!istype(I, /obj/item/circuitboard))
@@ -716,22 +700,22 @@
 
 			var/obj/item/circuitboard/B = I
 			if(B.board_type != "computer")
-				to_chat(user, "<span class='warning'>[src] does not accept circuit boards of this type!</span>")
-				return
+				to_chat(user, SPAN_WARNING("[src] does not accept circuit boards of this type!"))
+				return ITEM_INTERACT_COMPLETE
 
 			if(!B.build_path)
-				to_chat(user, "<span class='warning'>This is not a functional computer circuit board!</span>")
-				return
+				to_chat(user, SPAN_WARNING("This is not a functional computer circuit board!"))
+				return ITEM_INTERACT_COMPLETE
 
 			B.play_tool_sound(src)
-			to_chat(user, "<span class='notice'>You place [B] inside [src].</span>")
+			to_chat(user, SPAN_NOTICE("You place [B] inside [src]."))
 			name += " ([B.board_name])"
 			state = STATE_CIRCUIT
 			user.drop_item()
 			B.forceMove(src)
 			circuit = B
 			update_icon()
-			return
+			return ITEM_INTERACT_COMPLETE
 
 		if(STATE_NOWIRES)
 			if(!istype(I, /obj/item/stack/cable_coil))
@@ -739,21 +723,21 @@
 
 			var/obj/item/stack/cable_coil/C = I
 			if(C.get_amount() < 5)
-				to_chat(user, "<span class='warning'>You need five lengths of cable to wire the frame.</span>")
-				return
+				to_chat(user, SPAN_WARNING("You need five lengths of cable to wire the frame."))
+				return ITEM_INTERACT_COMPLETE
 
 			C.play_tool_sound(src)
-			to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
+			to_chat(user, SPAN_NOTICE("You start to add cables to the frame."))
 			if(!do_after(user, 2 SECONDS * C.toolspeed, target = src))
-				return
+				return ITEM_INTERACT_COMPLETE
 			if(C.get_amount() < 5 || !C.use(5))
-				to_chat(user, "<span class='warning'>At some point during construction you lost some cable. Make sure you have five lengths before trying again.</span>")
-				return
+				to_chat(user, SPAN_WARNING("At some point during construction you lost some cable. Make sure you have five lengths before trying again."))
+				return ITEM_INTERACT_COMPLETE
 
-			to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+			to_chat(user, SPAN_NOTICE("You add cables to the frame."))
 			state = STATE_WIRES
 			update_icon()
-			return
+			return ITEM_INTERACT_COMPLETE
 
 		if(STATE_WIRES)
 			if(!istype(I, /obj/item/stack/sheet/glass))
@@ -761,21 +745,21 @@
 
 			var/obj/item/stack/sheet/glass/G = I
 			if(G.get_amount() < 2)
-				to_chat(user, "<span class='warning'>You need two sheets of glass for this.</span>")
-				return
+				to_chat(user, SPAN_WARNING("You need two sheets of glass for this."))
+				return ITEM_INTERACT_COMPLETE
 
 			G.play_tool_sound(src)
-			to_chat(user, "<span class='notice'>You start to add the glass panel to the frame.</span>")
+			to_chat(user, SPAN_NOTICE("You start to add the glass panel to the frame."))
 			if(!do_after(user, 2 SECONDS * G.toolspeed, target = src))
-				return
+				return ITEM_INTERACT_COMPLETE
 			if(G.get_amount() < 2 || !G.use(2))
-				to_chat(user, "<span class='warning'>At some point during construction you lost some glass. Make sure you have two sheets before trying again.</span>")
-				return
+				to_chat(user, SPAN_WARNING("At some point during construction you lost some glass. Make sure you have two sheets before trying again."))
+				return ITEM_INTERACT_COMPLETE
 
-			to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
+			to_chat(user, SPAN_NOTICE("You put in the glass panel."))
 			state = STATE_GLASS
 			update_icon()
-			return
+			return ITEM_INTERACT_COMPLETE
 
 	return ..()
 

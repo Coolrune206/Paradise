@@ -16,6 +16,10 @@
 	blacklisted_disabilities = list(DISABILITY_FLAG_BLIND, DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_DIZZY, DISABILITY_FLAG_NERVOUS, DISABILITY_FLAG_LISP)
 	outfit = /datum/outfit/job/captain
 	important_information = "This role requires you to coordinate a department. You are required to be familiar with Standard Operating Procedure (Command), basic job duties, and act professionally (roleplay)."
+	standard_paycheck = CREW_PAY_HIGH
+	difficulty = VERY_HARD_DIFFICULTY
+	description = "The Captain has the responsibility to oversee heads of staff.\n\n\
+					Difficulties: Standard Operating Procedure (General, Legal, Command), Space Law, paperwork, AI modules, communication"
 
 /datum/job/captain/get_access()
 	return get_all_accesses()
@@ -80,10 +84,9 @@
 		ACCESS_CHANGE_IDS,
 		ACCESS_CHAPEL_OFFICE,
 		ACCESS_CLOWN,
-		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING_GENERAL,
 		ACCESS_COURT,
 		ACCESS_CREMATORIUM,
-		ACCESS_ENGINE,
 		ACCESS_EVA,
 		ACCESS_EXPEDITION,
 		ACCESS_HEADS_VAULT,
@@ -107,9 +110,14 @@
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS
 	)
+	skeleton_access = list(ACCESS_CAPTAIN)
 	blacklisted_disabilities = list(DISABILITY_FLAG_BLIND, DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_DIZZY , DISABILITY_FLAG_NERVOUS, DISABILITY_FLAG_LISP)
 	outfit = /datum/outfit/job/hop
 	important_information = "This role requires you to coordinate a department. You are required to be familiar with Standard Operating Procedure (Service), basic job duties, and act professionally (roleplay)."
+	standard_paycheck = CREW_PAY_HIGH
+	difficulty = MEDIUM_DIFFICULTY
+	description = "The Head of Personnel has the responsibility of overseeing the Service department.\n\n\
+					Difficulties: Standard Operating Procedure (Standard, Service, Command), Space Law, administration, IDs, paperwork "
 
 /datum/outfit/job/hop
 	name = "Head of Personnel"
@@ -151,7 +159,7 @@
 		ACCESS_CARGO,
 		ACCESS_CHAPEL_OFFICE,
 		ACCESS_CLOWN,
-		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING_GENERAL,
 		ACCESS_COURT,
 		ACCESS_CREMATORIUM,
 		ACCESS_ENGINE,
@@ -185,6 +193,10 @@
 	blacklisted_disabilities = list(DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_NERVOUS, DISABILITY_FLAG_LISP)
 	outfit = /datum/outfit/job/nanotrasenrep
 	important_information = "This role requires you to advise the Command team about Standard Operating Procedure, Chain of Command, and report to Central Command about various matters. You are required to act in a manner befitting someone representing Nanotrasen."
+	standard_paycheck = CREW_PAY_MEDIUM
+	difficulty = LOW_DIFFICULTY
+	description = "The Nanotrasen Representative has the responsibility of ensuring heads of staff are following Standard Operating Procedure.\n\n\
+					Difficulties: Standard Operating Procedure (General, Command), paperwork, communication"
 
 /datum/outfit/job/nanotrasenrep
 	name = "Nanotrasen Representative"
@@ -228,7 +240,7 @@
 	access = list(
 		ACCESS_BLUESHIELD,
 		ACCESS_CARGO,
-		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING_GENERAL,
 		ACCESS_ENGINE,
 		ACCESS_EVIDENCE,
 		ACCESS_HEADS,
@@ -246,6 +258,10 @@
 	missing_limbs_allowed = FALSE
 	outfit = /datum/outfit/job/blueshield
 	important_information = "This role requires you to ensure the safety of the Heads of Staff, not the general crew. You may perform arrests only if the combatant is directly threatening a member of Command, the Nanotrasen Representative, or the Magistrate."
+	standard_paycheck = CREW_PAY_MEDIUM
+	difficulty = HARD_DIFFICULTY
+	description = "The Blueshield has the responsibility of protecting heads of staff and dignitaries.\n\n\
+					Difficulties: Healing, combat, communication"
 
 /datum/outfit/job/blueshield
 	name = "Blueshield"
@@ -298,6 +314,10 @@
 	blacklisted_disabilities = list(DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_NERVOUS, DISABILITY_FLAG_LISP)
 	outfit = /datum/outfit/job/judge
 	important_information = "This role requires you to oversee legal matters and make important decisions about sentencing. You are required to have an extensive knowledge of Space Law and Security SOP and only operate within, not outside, the boundaries of the law."
+	standard_paycheck = CREW_PAY_MEDIUM
+	difficulty = HARD_DIFFICULTY
+	description = "The Magistrate has the responsibility of being the final word on Space Law and ensuring it's enforced properly.\n\n\
+					Difficulties: Space Law, Standard Operating Procedure (General, Legal), communication"
 
 /datum/outfit/job/judge
 	name = "Magistrate"
@@ -337,7 +357,7 @@
 	selection_color = "#ddddff"
 	access = list(
 		ACCESS_CARGO,
-		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING_GENERAL,
 		ACCESS_COURT,
 		ACCESS_INTERNAL_AFFAIRS,
 		ACCESS_MAILSORTING,
@@ -352,6 +372,10 @@
 	blacklisted_disabilities = list(DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_NERVOUS, DISABILITY_FLAG_LISP)
 	outfit = /datum/outfit/job/iaa
 	important_information = "Your job is to deal with affairs regarding Standard Operating Procedure. You are NOT in charge of Space Law affairs, nor can you override it. You are NOT a prisoner defence lawyer."
+	standard_paycheck = CREW_PAY_MEDIUM
+	difficulty = MEDIUM_DIFFICULTY
+	description = "Internal Affairs Agents have the responsibility of ensuring departments are following Standard Operating Procedure.\n\n\
+					Difficulties: Standard Operating Procedure (General, Departmental), paperwork"
 
 /datum/outfit/job/iaa
 	name = "Internal Affairs Agent"
@@ -399,7 +423,7 @@
 		ACCESS_ALL_PERSONAL_LOCKERS,
 		ACCESS_CARGO,
 		ACCESS_MAILSORTING,
-		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING_GENERAL,
 		ACCESS_COURT,
 		ACCESS_EVA,
 		ACCESS_MAINT_TUNNELS,
@@ -413,6 +437,10 @@
 	blacklisted_disabilities = list(DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_NERVOUS, DISABILITY_FLAG_LISP)
 	outfit = /datum/outfit/job/nct
 	important_information = "Your job is to try to assist as many crew members as possible regardless of department. You are NOT permitted to give command staff advice on any command SOP questions or aid in legal advice."
+	standard_paycheck = CREW_PAY_MEDIUM
+	difficulty = MEDIUM_DIFFICULTY
+	description = "Nanotrasen Career Trainers (NCTs for short) are currently a mentor/admin only job. They are held to a higher standard, like any other staff-only job.\n\n\
+					Difficulties: Training crew."
 
 /datum/outfit/job/nct
 	name = "Nanotrasen Career Trainer"
@@ -456,13 +484,12 @@
 
 /datum/spell/big_voice
 	name = "Speak with Authority"
-	desc = "Speak with a COMMANDING AUTHORITY against those you govorn."
+	desc = "Speak with a COMMANDING AUTHORITY against those you govern."
 	base_cooldown = 1 MINUTES
 	action_background_icon_state = "bg_default"
 	action_icon = 'icons/obj/clothing/accessories.dmi'
 	action_icon_state = "gold"
 	sound = null
-	invocation_type = "none"
 	invocation = null
 	clothes_req = FALSE
 
@@ -470,7 +497,7 @@
 	return new /datum/spell_targeting/self
 
 /datum/spell/big_voice/cast(list/targets, mob/living/user)
-	var/say_message = tgui_input_text(user, "Message:", "Speak With Authority")
+	var/say_message = tgui_input_text(user, "Message:", "Speak With Authority", encode = FALSE)
 	if(isnull(say_message))
 		revert_cast()
 	else

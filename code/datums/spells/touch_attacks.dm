@@ -2,7 +2,6 @@
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
 	var/on_remove_message = TRUE
-	invocation_type = "none" //you scream on connecting, not summoning
 
 /datum/spell/touch/create_new_targeting()
 	return new /datum/spell_targeting/self
@@ -31,9 +30,9 @@
 	if(!hand_handled)
 		qdel(attached_hand)
 		attached_hand = null
-		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		to_chat(user, SPAN_WARNING("Your hands are full!"))
 		return 0
-	to_chat(user, "<span class='notice'>You channel the power of the spell to your hand.</span>")
+	to_chat(user, SPAN_NOTICE("You channel the power of the spell to your hand."))
 	return 1
 
 /datum/spell/touch/proc/discharge_hand(atom/target, any = FALSE)
@@ -45,7 +44,7 @@
 		return
 	QDEL_NULL(attached_hand)
 	if(on_remove_message)
-		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
+		to_chat(user, SPAN_NOTICE("You draw the power out of your hand."))
 
 
 /datum/spell/touch/disintegrate
@@ -54,7 +53,6 @@
 	hand_path = /obj/item/melee/touch_attack/disintegrate
 
 	base_cooldown = 600
-	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -65,7 +63,6 @@
 	hand_path = /obj/item/melee/touch_attack/fleshtostone
 
 	base_cooldown = 600
-	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
@@ -76,7 +73,6 @@
 	hand_path = /obj/item/melee/touch_attack/plushify
 
 	base_cooldown = 600
-	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "plush"

@@ -56,9 +56,9 @@
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
-	desc = "Reverse engineered by Cybersun Industries from Donk Corporation designs, this system of hidden compartments \
-		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
-		whether smuggling, or simply hauling."
+	desc = "A collaborative effort between Cybersun Industries and Donk Corporation, this system of hidden compartments, attachment points, and pouches \
+		fits entirely within the suit, distributing items and weight evenly to ensure a comfortable carrying experience for the user \
+		in all manner of hauling tasks."
 	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
@@ -83,7 +83,6 @@
 	max_w_class = WEIGHT_CLASS_SMALL
 	removable = FALSE
 	max_combined_w_class = 21
-	max_items = 7
 
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
@@ -115,9 +114,9 @@
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
 	name = "MOD ion jetpack module"
-	desc = "A series of electric thrusters installed across the suit, this is a module highly anticipated by trainee Engineers. \
-		Rather than using gasses for combustion thrust, these jets are capable of accelerating ions using \
-		charge from the suit's charge. Some say this isn't Cybersun Industries's first foray into jet-enabled suits."
+	desc = "A series of electric thrusters installed across the suit, allowing for precision movement in zero-G environments. \
+		Rather than using gasses for combustion thrust, this modules uses lightweight ion thrusters connected directly to the suit's energy cell, \
+		removing any reliance on external fuel systems. This does, however, mean that the thrusters are useless outside of zero-G, as any heavy weight will easily overwhelm the ion engines."
 	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
@@ -232,7 +231,7 @@
 
 /obj/item/mod/module/flashlight/on_activation()
 	if(!COOLDOWN_FINISHED(src, activation_cooldown))
-		to_chat(mod.wearer, "<span class='warning'>[src] isn't ready after being shut down!</span>")
+		to_chat(mod.wearer, SPAN_WARNING("[src] isn't ready after being shut down!"))
 		return
 	. = ..()
 	if(!.)
@@ -265,7 +264,7 @@
 			if(isnull(value))
 				return
 			if(is_color_dark(value, 50))
-				to_chat(mod.wearer, ("<span class='warning'>That is too dark</span>"))
+				to_chat(mod.wearer, (SPAN_WARNING("That is too dark")))
 				return
 			light_color = value
 			mod.wearer.regenerate_icons()
@@ -280,7 +279,7 @@
 	on_deactivation(FALSE)
 	COOLDOWN_START(src, activation_cooldown, 20 SECONDS)
 
-	to_chat(mod.wearer, "<span class='warning'>Your [name] shuts off!</span>")
+	to_chat(mod.wearer, SPAN_WARNING("Your [name] shuts off!"))
 
 ///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
@@ -426,7 +425,6 @@
 /obj/item/mod/module/dna_lock/emp_shield
 	name = "MOD DN-MP shield lock"
 	desc = "This syndicate module is a combination EMP shield and DNA lock. Provides the best of both worlds, with the weakness of niether."
-	icon_state = "dnalock"
 	origin_tech = "materials=6;bluespace=5;syndicate=3"
 	complexity = 3
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5

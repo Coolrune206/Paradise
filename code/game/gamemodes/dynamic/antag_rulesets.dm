@@ -112,7 +112,10 @@
 		return antag_cost * antag_amount // shitty refund for now
 
 /datum/ruleset/proc/roundstart_can_apply(datum/mind/antag)
-	if(EXCLUSIVE_OR(antag.current.client.prefs.active_character.species in banned_species, banned_species_only))
+	var/client/antag_client = GLOB.directory[ckey(antag.key)]
+	if(!antag_client)
+		CRASH("Null client for key [antag.key] during dynamic antag assignment.")
+	if(EXCLUSIVE_OR(antag_client.prefs.active_character.species in banned_species, banned_species_only))
 		SEND_SIGNAL(src, COMSIG_RULESET_FAILED_SPECIES)
 		return FALSE
 	if(antag.special_role) // You can only have 1 antag roll at a time, sorry
@@ -127,7 +130,7 @@
 /datum/ruleset/proc/refund(info)
 	// not enough antagonists signed up!!! idk what to do. The only real solution is to procedurally allocate budget, which will result in 1000x more get_players_for_role() calls. Which is not cheap.
 	// OR we cache get_players_for_role() and then just check if they have a special_role. May be unreliable.
-	// log_dynamic("[info] Refunding [antag_cost * antag_amount] budget.")
+	log_dynamic("[info] Refund unimplemented, wasting [antag_cost * antag_amount] budget.")
 	// Currently unimplemented. Will be useful for a possible future PR where latejoin antagonists are factored in.
 	return
 
@@ -146,7 +149,7 @@
 		if(jobban_isbanned(player, ROLE_SYNDICATE) || jobban_isbanned(player, antagonist_type::job_rank))
 			continue
 		// Make sure they want to play antag, and that they're not already something (off station or antag)
-		if(player.client.skip_antag || player.mind.offstation_role || player.mind.special_role)
+		if(player.client.persistent.skip_antag || player.mind.offstation_role || player.mind.special_role)
 			continue
 		// Make sure they actually want to be this antagonist
 		if(!(antagonist_type::job_rank in player.client.prefs.be_special))
@@ -197,6 +200,7 @@
 		if(ishuman(antag.current))
 			traitor_datum.delayed_objectives = TRUE
 			traitor_datum.addtimer(CALLBACK(traitor_datum, TYPE_PROC_REF(/datum/antagonist/traitor, reveal_delayed_objectives)), latespawn_time, TIMER_DELETE_ME)
+		traitor_datum.is_roundstart = TRUE
 		antag.add_antag_datum(traitor_datum)
 		SSblackbox.record_feedback("nested tally", "dynamic_selections", 1, list("roundstart", "[antagonist_type]"))
 
@@ -307,7 +311,6 @@
 
 /datum/ruleset/team/cult
 	name = "Cultist"
-	ruleset_cost = 1
 	ruleset_weight = 3
 	// antag_weight doesnt matter, since we've already allocated our budget for 4 cultists only
 	antag_cost = 30
@@ -326,10 +329,10 @@
 /datum/ruleset/team/cult/declare_completion()
 	if(SSticker.mode.cult_team.cult_status == NARSIE_HAS_RISEN)
 		SSticker.mode_result = "cult win - cult win"
-		to_chat(world, "<span class='danger'><FONT size=3>The cult wins! It has succeeded in summoning [GET_CULT_DATA(entity_name, "their god")]!</FONT></span>")
+		to_chat(world, SPAN_DANGER("<FONT size=3>The cult wins! It has succeeded in summoning [GET_CULT_DATA(entity_name, "their god")]!</FONT>"))
 	else if(SSticker.mode.cult_team.cult_status == NARSIE_HAS_FALLEN)
 		SSticker.mode_result = "cult draw - narsie died, nobody wins"
-		to_chat(world, "<span class='danger'><FONT size = 3>Nobody wins! [GET_CULT_DATA(entity_name, "the cult god")] was summoned, but banished!</FONT></span>")
+		to_chat(world, SPAN_DANGER("<FONT size = 3>Nobody wins! [GET_CULT_DATA(entity_name, "the cult god")] was summoned, but banished!</FONT>"))
 	else
 		SSticker.mode_result = "cult loss - staff stopped the cult"
-		to_chat(world, "<span class='warning'><FONT size = 3>The staff managed to stop the cult!</FONT></span>")
+		to_chat(world, SPAN_WARNING("<FONT size = 3>The staff managed to stop the cult!</FONT>"))

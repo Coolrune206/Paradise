@@ -9,11 +9,12 @@
 	hitsound = 'sound/items/handling/salvagepickup.ogg'
 	pickup_sound = 'sound/items/handling/salvagepickup.ogg'
 	drop_sound = 'sound/items/handling/salvagedrop.ogg'
-	w_class = WEIGHT_CLASS_NORMAL
+	/// How much is the salvage worth?
+	var/value = 100
 
 /obj/item/salvage/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>You can bring this back to Cargo to sell to Central Command onboard the 'NTV Arion' Supply shuttle.</span>"
+	. += SPAN_NOTICE("You can bring this back to Cargo to sell to Central Command onboard the 'NTV Arion' Supply shuttle.")
 
 /// Ruin Salvage, misc loot gained from looking around ruins.
 
@@ -87,7 +88,7 @@
 
 /obj/item/salvage/loot/soviet
 	name = "\improper Cygni manifesto"
-	desc = "A small book, written in Zvezhan, detailing the manifesto of Malfoy Ames, father of The Cygni Rebellion. Banned in Federation space, it may fetch a decent price on the black market."
+	desc = "A small book, written in Cygni Standard, detailing the manifesto of Malfoy Ames, father of The Cygni Rebellion. Banned in Federation space, it may fetch a decent price on the black market."
 	icon_state = "ussp_manual"
 	hitsound = 'sound/items/handling/paper_pickup.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
@@ -100,3 +101,12 @@
 	hitsound = 'sound/items/handling/paper_pickup.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
+
+/obj/item/salvage/loot/vox
+	name = "biotech fragment"
+	desc = "A fragment of broken vox biotechnology. While no longer functional, the inner workings are sure to be of interest to collectors and scientists."
+	icon_state = "vox_fragment"
+	hitsound = 'sound/items/handling/taperecorder_drop.ogg'
+	pickup_sound = 'sound/items/handling/taperecorder_pickup.ogg'
+	drop_sound = 'sound/items/handling/taperecorder_drop.ogg'
+	value = 125 // Mobs that drop this are fairly dangerous, so let's give it some value

@@ -3,7 +3,6 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	w_class = 100
-	item_state = "electronic"
 	flags = CONDUCT
 	var/module_armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, RAD = 0, FIRE = 0, ACID = 0)
 
@@ -281,7 +280,7 @@
 	R.add_language("Sol Common", TRUE)
 	R.add_language("Tradeband", TRUE)
 	R.add_language("Gutter", FALSE)
-	R.add_language("Zvezhan", TRUE)
+	R.add_language("Cygni Standard", TRUE)
 	R.add_language("Sinta'unathi", FALSE)
 	R.add_language("Siik'tajr", FALSE)
 	R.add_language("Canilunzt", FALSE)
@@ -294,6 +293,7 @@
 	R.add_language("Orluum", FALSE)
 	R.add_language("Clownish", FALSE)
 	R.add_language("Tkachi", FALSE)
+	R.add_language("Skkula-Runespeak", FALSE)
 
 ///Adds armor to a cyborg. Normaly resets it to 0 across the board, unless the module has an armor defined.
 /obj/item/robot_module/proc/add_armor(mob/living/silicon/robot/R)
@@ -394,7 +394,6 @@
 	name = "plasma syringe cannon"
 	desc = "A syringe gun integrated into a medical cyborg's chassis. Fires heavy-duty plasma syringes tipped in poison."
 	icon_state = "rapidsyringegun"
-	throw_speed = 3
 	throw_range = 7
 	force = 4
 	fire_sound = 'sound/items/syringeproj.ogg'
@@ -423,7 +422,7 @@
 	if(!current_syringes || chambered?.BB)
 		return
 
-	chambered.BB = new /obj/item/projectile/bullet/dart/syringe/heavyduty(src)
+	chambered.BB = new /obj/projectile/bullet/dart/syringe/heavyduty(src)
 	chambered.BB.reagents.add_reagent_list(list("toxin" = 2))
 	chambered.BB.name = "heavy duty syringe"
 	current_syringes--
@@ -436,6 +435,9 @@
 // Fluorosulphuric acid spray bottle.
 /obj/item/reagent_containers/spray/cyborg_facid
 	name = "Polyacid spray"
+	spray_maxrange = 3
+	spray_currentrange = 3
+	adjustable = FALSE
 	list_reagents = list("facid" = 250)
 
 /obj/item/reagent_containers/spray/cyborg_facid/cyborg_recharge(coeff, emagged)
@@ -471,6 +473,7 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/tile/catwalk/cyborg,
 		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/stack/cable_coil/extra_insulated/cyborg,
 		/obj/item/stack/sheet/glass/cyborg,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/inflatable/cyborg,
@@ -537,11 +540,12 @@
 		/obj/item/mop/advanced/cyborg,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator/janitor,
+		/obj/item/borg/push_broom,
+		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini/cyborg,
-		/obj/item/melee/flyswatter
 	)
 	emag_override_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
-	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_facid, /obj/item/malfbroom)
+	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_facid, /obj/item/borg/push_broom/combat)
 	malf_modules = list(/obj/item/stack/caution/proximity_sign/malf)
 	special_rechargables = list(
 		/obj/item/lightreplacer,
@@ -590,31 +594,7 @@
 			if(!IS_HORIZONTAL(cleaned_human))
 				continue
 			cleaned_human.clean_blood()
-			to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
-
-
-/obj/item/malfbroom
-	name = "cyborg combat broom"
-	desc = "A steel-core push broom for the hostile cyborg. The firm bristles make it more suitable for fighting than cleaning."
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "broom0"
-	base_icon_state = "broom"
-	attack_verb = list("smashed", "slammed", "whacked", "thwacked", "swept")
-	force = 20
-
-/obj/item/malfbroom/attack__legacy__attackchain(mob/target, mob/user)
-	if(!ishuman(target))
-		return ..()
-	var/mob/living/carbon/human/H = target
-	if(H.stat != CONSCIOUS || IS_HORIZONTAL(H))
-		return ..()
-	H.visible_message("<span class='danger'>[user] sweeps [H]'s legs out from under [H.p_them()]!</span>", \
-						"<span class='userdanger'>[user] sweeps your legs out from under you!</span>", \
-						"<span class='italics'>You hear sweeping.</span>")
-	playsound(get_turf(user), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	H.apply_damage(20, BRUTE)
-	H.KnockDown(4 SECONDS)
-	add_attack_logs(user, H, "Leg swept with cyborg combat broom", ATKLOG_ALL)
+			to_chat(cleaned_human, SPAN_DANGER("[src] cleans your face!"))
 
 // Service
 /obj/item/robot_module/butler
@@ -689,8 +669,9 @@
 	R.add_language("Chittin", 1)
 	R.add_language("Bubblish", 1)
 	R.add_language("Clownish",1)
-	R.add_language("Zvezhan", 1)
+	R.add_language("Cygni Standard", 1)
 	R.add_language("Tkachi", 1)
+	R.add_language("Skkula-Runespeak", 1)
 
 // Mining
 /obj/item/robot_module/miner
@@ -789,6 +770,7 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/tile/catwalk/cyborg,
 		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/stack/cable_coil/extra_insulated/cyborg,
 		/obj/item/stack/sheet/glass/cyborg/drone,
 		/obj/item/stack/sheet/rglass/cyborg/drone,
 		/obj/item/stack/sheet/wood/cyborg,

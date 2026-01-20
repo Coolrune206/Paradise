@@ -49,6 +49,21 @@
 	cost = 5
 	job = list("Clown")
 
+/datum/uplink_item/jobspecific/clown_car
+	name = "Clown Car"
+	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
+			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
+			You can ram any crew you come across and stuff them into your car, kidnapping them and locking them inside until \
+			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
+			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
+			Premium features can be unlocked with a cryptographic sequencer!"
+	reference = "CCR"
+	item = /obj/tgvehicle/sealed/car/clowncar
+	cost = 50
+	job = list("Clown")
+	surplus = 0
+	hijack_only = TRUE
+
 //mime
 /datum/uplink_item/jobspecific/caneshotgun
 	name = "Cane Shotgun and Assassination Shells"
@@ -223,6 +238,16 @@
 	item = /obj/item/bio_chip_implanter/shock
 	cost = 50
 	job = list("Station Engineer", "Chief Engineer")
+
+/datum/uplink_item/jobspecific/meltdown_rod
+	name = "Nuclear Meltdown Rod"
+	desc = "A specially designed nuclear rod, guaranteed to cause the meltdown of any reactor it's placed into. For those tasked with detonating the station's nuclear warhead, this will not achieve that end."
+	reference = "SMDR"
+	item = /obj/item/nuclear_rod/fuel/meltdown
+	cost = 25
+	job = list("Station Engineer", "Chief Engineer")
+	hijack_only = TRUE
+	excludefrom = list(UPLINK_TYPE_NUCLEAR)
 
 //RD
 
@@ -566,6 +591,14 @@
 	cost = 50
 	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
 
+/datum/uplink_item/device_tools/extraction_beacon
+	name = "Extraction Flare"
+	desc = "A special flare used to call in an extraction portal. The portal takes time to generate, and will only work in certain rooms that it is pre-calibrated for. The Syndicate withholds the right to deny a portal to agents with certain objectives."
+	reference = "EXTF"
+	item = /obj/item/wormhole_jaunter/extraction
+	limited_stock = 1
+	excludefrom = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_SST)
+
 /datum/uplink_item/device_tools/hyper_medipen
 	name = "Hyper-regenerative Medipen"
 	desc = "An autoinjector filled with a variety of medical chemicals. It rapidly heals conventional injuries and genetic damage, but loses potency just as quickly. May have side effects if multiple are used in quick succession."
@@ -660,13 +693,13 @@
 	var/datum/mind/mind = usr.mind
 	var/datum/antagonist/traitor/AT = mind.has_antag_datum(/datum/antagonist/traitor)
 	if(LAZYACCESS(GLOB.contractors, mind))
-		to_chat(usr, "<span class='warning'>Error: Contractor credentials detected for the current user. Unable to provide another Contractor kit.</span>")
+		to_chat(usr, SPAN_WARNING("Error: Contractor credentials detected for the current user. Unable to provide another Contractor kit."))
 		return
 	else if(!AT)
-		to_chat(usr, "<span class='warning'>Error: Embedded Syndicate credentials not found.</span>")
+		to_chat(usr, SPAN_WARNING("Error: Embedded Syndicate credentials not found."))
 		return
 	else if(IS_CHANGELING(usr) || mind.has_antag_datum(/datum/antagonist/vampire))
-		to_chat(usr, "<span class='warning'>Error: Embedded Syndicate credentials contain an abnormal signature. Aborting.</span>")
+		to_chat(usr, SPAN_WARNING("Error: Embedded Syndicate credentials contain an abnormal signature. Aborting."))
 		return
 
 	var/obj/item/I = ..()

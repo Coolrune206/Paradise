@@ -57,9 +57,7 @@
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibgauntlets0" //Inhands handled by the module overlays
 	flags = NODROP
-	force = 0
 	w_class = WEIGHT_CLASS_BULKY
-	toolspeed = 1
 	var/defib_cooldown = 5 SECONDS
 	var/safety = TRUE
 	/// Whether or not the paddles are on cooldown. Used for tracking icon states.
@@ -81,7 +79,7 @@
 /obj/item/mod_defib/proc/on_cooldown_expire(obj/item/defib)
 	SIGNAL_HANDLER // COMSIG_DEFIB_READY
 	on_cooldown = FALSE
-	visible_message("<span class='notice'>[src] beeps: Defibrillation unit ready.</span>")
+	visible_message(SPAN_NOTICE("[src] beeps: Defibrillation unit ready."))
 	playsound(get_turf(src), 'sound/machines/defib_ready.ogg', 50, FALSE)
 	update_icon(UPDATE_ICON_STATE)
 
@@ -103,7 +101,6 @@
 		straight to a victims heart to disable them, or maybe even outright stop their heart with enough power."
 	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 400 // 2000 charge. Since you like causing heart attacks, don't you?
-	module_type = MODULE_ACTIVE
 	overlay_state_inactive = "module_defibrillator_combat"
 	overlay_state_active = "module_defibrillator_combat_active"
 	device = /obj/item/mod_defib/syndicate

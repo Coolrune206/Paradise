@@ -21,7 +21,6 @@
 	name = "mecha chassis"
 	icon_state = "backbone"
 	var/datum/construction/construct
-	flags = CONDUCT
 
 /obj/item/mecha_parts/chassis/Destroy()
 	QDEL_NULL(construct)
@@ -268,7 +267,7 @@
 /obj/item/mecha_parts/chassis/phazon/attackby__legacy__attackchain(obj/item/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, /obj/item/assembly/signaler/anomaly/bluespace))
-		to_chat(user, "<span class='warning'>The anomaly core socket only accepts bluespace anomaly cores!</span>")
+		to_chat(user, SPAN_WARNING("The anomaly core socket only accepts bluespace anomaly cores!"))
 
 /obj/item/mecha_parts/part/phazon_torso
 	name = "\improper Phazon torso"
@@ -401,7 +400,6 @@
 
 
 /obj/item/circuitboard/mecha/ripley
-	origin_tech = "programming=2"
 
 /obj/item/circuitboard/mecha/ripley/main
 	board_name = "Ripley Central Control Module"
@@ -412,7 +410,6 @@
 	icon_state = "mcontroller"
 
 /obj/item/circuitboard/mecha/nkarrdem
-	origin_tech = "programming=2"
 
 /obj/item/circuitboard/mecha/nkarrdem/main
 	board_name = "Nkarrdem Central Control Module"

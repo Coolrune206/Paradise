@@ -130,7 +130,6 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1.5
-	slowdown_active = 0.75
 	allowed_suit_storage = list(
 		/obj/item/rcd,
 		/obj/item/fireaxe,
@@ -181,7 +180,6 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	siemens_coefficient = 0
 	slowdown_inactive = 1.5
-	slowdown_active = 0.75
 	allowed_suit_storage = list(
 		/obj/item/rcd,
 		/obj/item/fireaxe/,
@@ -219,7 +217,7 @@
 	)
 
 /obj/item/mod/armor/mod_theme_atmospheric
-	armor = list(MELEE = 20, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 15, RAD = 15, FIRE = INFINITY, ACID = 150)
+	armor = list(MELEE = 20, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 15, RAD = 75, FIRE = INFINITY, ACID = 150)
 
 /datum/mod_theme/advanced
 	name = "'Daedalus' advanced"

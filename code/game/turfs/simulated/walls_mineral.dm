@@ -2,7 +2,6 @@
 	name = "mineral wall"
 	desc = "If you can see this, please make an issue report on GitHub."
 	icon_state = ""
-	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	var/last_event = 0
 	var/active = FALSE
@@ -104,9 +103,9 @@
 /turf/simulated/wall/mineral/plasma/welder_act(mob/user, obj/item/I)
 	if(I.tool_enabled)
 		ignite(2500) //The number's big enough
-		user.visible_message("<span class='danger'>[user] sets [src] on fire!</span>",\
-							"<span class='danger'>[src] disintegrates into a cloud of plasma!</span>",\
-							"<span class='warning'>You hear a 'whoompf' and a roar.</span>")
+		user.visible_message(SPAN_DANGER("[user] sets [src] on fire!"),\
+							SPAN_DANGER("[src] disintegrates into a cloud of plasma!"),\
+							SPAN_WARNING("You hear a 'whoompf' and a roar."))
 		message_admins("Plasma wall ignited by [key_name_admin(user)] in ([x], [y], [z] - <A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma wall ignited by [key_name(user)] in ([x], [y], [z])")
 		investigate_log("was <font color='red'><b>ignited</b></font> by [key_name(user)]",INVESTIGATE_ATMOS)
@@ -116,21 +115,16 @@
 	ChangeTurf(/turf/simulated/floor)
 	atmos_spawn_air(LINDA_SPAWN_HEAT | LINDA_SPAWN_TOXINS, 400)
 
-/turf/simulated/wall/mineral/plasma/temperature_expose(exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
-	..()
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
 /turf/simulated/wall/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/simulated/wall/mineral/plasma/bullet_act(obj/item/projectile/Proj)
+/turf/simulated/wall/mineral/plasma/bullet_act(obj/projectile/Proj)
 	if(Proj.damage == 0)//lasertag guns and so on don't set off plasma anymore. can't use nodamage here because lasertag guns actually don't have it.
 		return
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj,/obj/projectile/beam))
 		PlasmaBurn(2500)
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj,/obj/projectile/ion))
 		PlasmaBurn(500)
 	..()
 
@@ -215,6 +209,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE)
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE)
 
+/turf/simulated/wall/mineral/titanium/copyTurf(turf/T)
+	. = ..()
+	T.transform = transform
+
 /turf/simulated/wall/mineral/titanium/nodiagonal
 	icon_state = "map-shuttle_nd"
 	smoothing_flags = SMOOTH_BITMASK
@@ -224,31 +222,10 @@
 
 /turf/simulated/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-//sub-type to be used for interior shuttle walls
-//won't get an underlay of the destination turf on shuttle move
-/turf/simulated/wall/mineral/titanium/interior/copyTurf(turf/T)
-	if(T.type != type)
-		T.ChangeTurf(type)
-		if(length(underlays))
-			T.underlays = underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(color)
-		T.atom_colours = atom_colours.Copy()
-		T.update_atom_colour()
-	if(T.dir != dir)
-		T.setDir(dir)
-	T.transform = transform
-	return T
-
-/turf/simulated/wall/mineral/titanium/copyTurf(turf/T)
-	. = ..()
-	T.transform = transform
+/// Used when we don't want to smooth with outer walls
+/turf/simulated/wall/mineral/titanium/interior
 
 /turf/simulated/wall/mineral/titanium/survival
 	name = "pod wall"
@@ -256,14 +233,10 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival_pod_walls-0"
 	base_icon_state = "survival_pod_walls"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
 /turf/simulated/wall/mineral/titanium/survival/nodiagonal
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "survival_pod_walls-0"
-	base_icon_state = "survival_pod_walls"
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/simulated/wall/mineral/titanium/survival/pod
@@ -282,9 +255,12 @@
 	smoothing_groups = list(SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
+/turf/simulated/wall/mineral/plastitanium/copyTurf(turf/T)
+	. = ..()
+	T.transform = transform
+
 /turf/simulated/wall/mineral/plastitanium/nodiagonal
 	icon_state = "map-shuttle_nd"
-	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/simulated/wall/mineral/plastitanium/nosmooth
@@ -294,27 +270,7 @@
 
 /turf/simulated/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-//have to copypaste this code
-/turf/simulated/wall/mineral/plastitanium/interior/copyTurf(turf/T)
-	if(T.type != type)
-		T.ChangeTurf(type)
-		if(length(underlays))
-			T.underlays = underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(color)
-		T.atom_colours = atom_colours.Copy()
-		T.update_atom_colour()
-	if(T.dir != dir)
-		T.setDir(dir)
-	T.transform = transform
-	return T
-
-/turf/simulated/wall/mineral/plastitanium/copyTurf(turf/T)
-	. = ..()
-	T.transform = transform
+/// Used when we don't want to smooth with outer walls
+/turf/simulated/wall/mineral/plastitanium/interior
