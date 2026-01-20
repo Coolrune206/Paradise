@@ -132,7 +132,7 @@
 	/// If this shot can immediately destroy rwalls or not
 	var/weakened_against_rwalls = FALSE
 
-/obj/item/projectile/beam/pulse/hitscan // This is still used in Pulse Turrets and Mecha Pulse
+/obj/item/projectile/beam/pulse/hitscan
 	impact_effect_type = null
 	light_color = null
 	hitscan = TRUE
